@@ -2,6 +2,10 @@ import * as authServices from "../services/authServices.js";
 import HttpError from "../helpers/HttpError.js";
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
+
+const { JWT_SECRET } = process.env;
 
 const signup = async (req, res) => {
   const newUser = await authServices.signup(req.body);
@@ -25,7 +29,20 @@ const signin = async (req, res) => {
     throw HttpError(401, "Email or password is wrong");
   }
 
-  const token = "34.333.33";
+  const payload = {
+    id: user.id,
+  };
+
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" });
+
+  // const decodeToken = jwt.decode(token);
+  // console.log(decodeToken);
+  // try {
+  //   const { id } = jwt.verify(token, JWT_SECRET);
+  //   console.log(id);
+  // } catch (error) {
+  //   throw error.message;
+  // }
 
   res.json({ token });
 };
