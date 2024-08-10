@@ -11,14 +11,26 @@ const User = sequelize.define("user", {
     allowNull: false,
     unique: true,
     validate: {
-      is: emailRegExp,
+      isEmail(value) {
+        if (!emailRegExp.test(value)) {
+          throw new Error(
+            "Please enter a valid email address (e.g., example@domain.com)."
+          );
+        }
+      },
     },
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      is: passwordRegExp,
+      isPassword(value) {
+        if (!passwordRegExp.test(value)) {
+          throw new Error(
+            "At least 1 Uppercase; At least 1 Lowercase; At least 1 Number; At least 1 Symbol, symbol allowed --> !@#$%^&*_=+-; Min 8 chars"
+          );
+        }
+      },
     },
   },
   subscription: {

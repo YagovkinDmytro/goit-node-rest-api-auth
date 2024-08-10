@@ -6,12 +6,15 @@ import {
   updateContactSchema,
   updateStatusContactSchema,
 } from "../schemas/contactsSchemas.js";
+import authenticate from "../middlewares/authenticate.js";
 
 const createMiddleware = validateBody(createContactSchema);
 const updateMiddleware = validateBody(updateContactSchema);
 const updateStatusContactMiddleware = validateBody(updateStatusContactSchema);
 
 const contactsRouter = Router();
+
+contactsRouter.use(authenticate);
 
 contactsRouter.get("/", contactsControllers.getAllContacts);
 
