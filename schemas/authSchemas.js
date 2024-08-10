@@ -3,6 +3,17 @@ import { emailRegExp } from "../authConstants.js/authConstants.js";
 import { passwordRegExp } from "../authConstants.js/authConstants.js";
 
 export const authSignupSchema = Joi.object({
-  email: Joi.string().pattern(emailRegExp).required(),
-  password: Joi.string().pattern(passwordRegExp).required(),
+  email: Joi.string()
+    .ruleset.pattern(emailRegExp)
+    .rule({
+      message: "Please enter a valid email address (e.g., example@domain.com).",
+    })
+    .required(),
+  password: Joi.string()
+    .ruleset.pattern(passwordRegExp)
+    .rule({
+      message:
+        "At least 1 Uppercase; At least 1 Lowercase; At least 1 Number; At least 1 Symbol, symbol allowed --> !@#$%^&*_=+-; Min 8 chars",
+    })
+    .required(),
 });
