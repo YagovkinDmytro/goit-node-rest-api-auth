@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
 import User from "../db/models/User.js";
 
-export const findUser = (qwery) =>
+export const findUser = (query) =>
   User.findOne({
-    where: qwery,
+    where: query,
   });
 
 export const signup = async (data) => {

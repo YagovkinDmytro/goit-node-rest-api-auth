@@ -18,10 +18,10 @@ const Contact = sequelize.define("contact", {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  // owner: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  // },
+  owner: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 });
 
 // await Contact.sync();
