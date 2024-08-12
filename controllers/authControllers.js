@@ -47,7 +47,10 @@ const signin = async (req, res) => {
   res.json({ token });
 };
 
+const logout = async (req, res) => {};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
+  logout: ctrlWrapper(logout),
 };
