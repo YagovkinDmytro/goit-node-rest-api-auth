@@ -2,14 +2,16 @@ import * as contactsService from "../services/contactsServices.js";
 import HttpError from "../helpers/HttpError.js";
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
 
-const getAllContacts = async (_, res) => {
-  const result = await contactsService.getContacts();
+const getAllContacts = async (req, res) => {
+  const { id: owner } = req.user;
+  const result = await contactsService.getContacts({ owner });
   res.json(result);
 };
 
 const getOneContact = async (req, res) => {
   const { id } = req.params;
-  const result = await contactsService.getContactById(id);
+  const { id: owner } = req.user;
+  const result = await contactsService.getContact({ id, owner });
   if (!result) {
     throw HttpError(404);
   }
@@ -24,17 +26,19 @@ const createContact = async (req, res) => {
 
 const updateContact = async (req, res) => {
   const { id } = req.params;
-  const result = await contactsService.updateContact(id, req.body);
+  const { id: owner } = req.user;
+  const result = await contactsService.updateContact({ id, owner }, req.body);
   if (!result || result[0] === 0) {
     throw HttpError(404);
   }
-  const resltUpdate = await contactsService.getContactById(id);
-  res.json(resltUpdate);
+  const resultUpdate = await contactsService.getContact({ id, owner });
+  res.json(resultUpdate);
 };
 
 const deleteContact = async (req, res) => {
   const { id } = req.params;
-  const result = await contactsService.removeContact(id);
+  const { id: owner } = req.user;
+  const result = await contactsService.removeContact({ id, owner });
   if (!result) {
     throw HttpError(404);
   }

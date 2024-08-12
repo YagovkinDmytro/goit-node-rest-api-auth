@@ -1,21 +1,23 @@
 import Contact from "../db/models/Contact.js";
 
-export const getContacts = () => Contact.findAll();
+export const getContacts = (query) =>
+  Contact.findAll({
+    where: query,
+  });
 
-export const getContactById = (contactId) => Contact.findByPk(contactId);
+export const getContact = (query) =>
+  Contact.findOne({
+    where: query,
+  });
 
 export const addContact = (data) => Contact.create(data);
 
-export const updateContact = (contactId, data) =>
+export const updateContact = (query, data) =>
   Contact.update(data, {
-    where: {
-      id: contactId,
-    },
+    where: query,
   });
 
-export const removeContact = (contactId) =>
+export const removeContact = (query) =>
   Contact.destroy({
-    where: {
-      id: contactId,
-    },
+    where: query,
   });
