@@ -19,3 +19,8 @@ export const signup = async (data) => {
     throw error;
   }
 };
+
+export const updateUser = (query, data) =>
+  User.update(data, {
+    where: query,
+  });
