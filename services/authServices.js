@@ -6,6 +6,16 @@ export const findUser = (query) =>
     where: query,
   });
 
+export const updateUser = async (query, data) => {
+  const user = await findUser(query);
+  if (!user) {
+    return null;
+  }
+  return user.update(data, {
+    returning: true,
+  });
+};
+
 export const signup = async (data) => {
   try {
     const { password } = data;
@@ -19,8 +29,3 @@ export const signup = async (data) => {
     throw error;
   }
 };
-
-export const updateUser = (query, data) =>
-  User.update(data, {
-    where: query,
-  });
