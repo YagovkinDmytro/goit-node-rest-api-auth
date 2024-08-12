@@ -32,19 +32,27 @@ const signin = async (req, res) => {
   const payload = {
     id: user.id,
   };
-
+  console.log(user);
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" });
 
-  // const decodeToken = jwt.decode(token);
-  // console.log(decodeToken);
-  // try {
-  //   const { id } = jwt.verify(token, JWT_SECRET);
-  //   console.log(id);
-  // } catch (error) {
-  //   throw error.message;
-  // }
+  res.json({
+    token,
+    user: {
+      email: user.email,
+      subscription: user.subscription,
+    },
+  });
+};
 
-  res.json({ token });
+const getCurrent = async (req, res) => {
+  const { email, subscription } = req.user;
+
+  res.json({
+    user: {
+      email,
+      subscription,
+    },
+  });
 };
 
 const logout = async (req, res) => {};
@@ -53,4 +61,5 @@ export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   logout: ctrlWrapper(logout),
+  getCurrent: ctrlWrapper(getCurrent),
 };
