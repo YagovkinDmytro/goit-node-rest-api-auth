@@ -17,3 +17,13 @@ export const authSignupSchema = Joi.object({
     })
     .required(),
 });
+
+export const authSetSubscriptionSchema = Joi.object({
+  subscription: Joi.string()
+    .valid("starter", "pro", "business")
+    .required()
+    .messages({
+      "any.only":
+        "Choose one of the following subscriptions: 'starter', 'pro', 'business'.",
+    }),
+});

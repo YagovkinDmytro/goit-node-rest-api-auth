@@ -66,9 +66,23 @@ const getCurrent = async (req, res) => {
   });
 };
 
+const setSubscription = async (req, res) => {
+  const { id } = req.user;
+  const data = req.body;
+  const { email, subscription } = await authServices.updateUser({ id }, data);
+
+  res.json({
+    user: {
+      email,
+      subscription,
+    },
+  });
+};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   logout: ctrlWrapper(logout),
   getCurrent: ctrlWrapper(getCurrent),
+  setSubscription: ctrlWrapper(setSubscription),
 };
